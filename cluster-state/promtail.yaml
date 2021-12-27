@@ -20,6 +20,10 @@ spec:
       values: |
         fullnameOverride: promtail
 
+        initContainer:
+          enabled: true
+          fsInotifyMaxUserInstances: 1024
+
   destination:
     name: in-cluster
     namespace: logging
