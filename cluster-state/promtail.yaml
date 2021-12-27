@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: promtail-111
+  labels:
+    app: promtail
+    cluster: global-k8s
+    project: global-network
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+
+spec:
+  project: default
+  source:
+    repoURL: https://grafana.github.io/helm-charts
+    chart: promtail
+    targetRevision: "3.0.0"
+    helm:
+      values: |
+        fullnameOverride: promtail
+
+  destination:
+    name: in-cluster
+    namespace: logging
+
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
